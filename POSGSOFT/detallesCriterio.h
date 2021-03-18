@@ -17,7 +17,7 @@ private:
     string observacionesJurados;
 
 public:
-    DetallesCriterio();
+    DetallesCriterio( int, Criterio ); // Constructor
     void setCalificacion();
     void setObservacion();
     void calcularCalificacionParcial();
