@@ -33,7 +33,8 @@ void Criterio::modificarCriterio()
 {
     int opcion, porcentaje;
     string texto;
-    do{
+    do{ // Pregunta al usuario que desea modificar y verifica que exista la opcion.
+        // En caso de no existir se itera el menú.
         cout << "Ingrese la opcion a modificar:" << endl;
         cout << "1. Texto del criterio" << endl;
         cout << "2. Porcentaje de ponderacion" << endl;
@@ -41,7 +42,7 @@ void Criterio::modificarCriterio()
         cout << "Opcion: ";
         cin >> opcion;
         switch(opcion)
-        {
+        {   // En cada caso se verifica que la opcion sea correcta
             case 0:
                 break;
             case 1:
