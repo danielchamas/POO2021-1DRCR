@@ -1,20 +1,24 @@
 #ifndef PERSONA_H
 #define PERSONA_H
+
 #include <iostream>
+#include <string>
+#include <list>
 
 using namespace std;
 
 enum class tipo
 {
-    interno,
-    externo
+    interno = 1,
+    externo = 2
 };
 
 enum class rol
 {
-    director,
-    jurado,
-    estudiante
+    director = 1,
+    asistente = 2,
+    jurado = 3,
+    estudiante = 4
 };
 
 class Persona
@@ -24,7 +28,7 @@ private:
     int id;
     string email;
     tipo tipo;
-    rol rol;
+    list<rol> rol;
 public:
     Persona();
 };
