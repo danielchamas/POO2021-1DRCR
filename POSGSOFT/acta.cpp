@@ -44,3 +44,9 @@ for (list<DetallesCriterio>::iterator it = listaDetallesCriterio.begin(); it != 
     notaFinal /= contadorCriterios;
     return notaFinal;
 }
+
+void Acta::cerrarActa()
+{
+    this->estadoActa = cerrado;
+}
+
