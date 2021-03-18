@@ -15,9 +15,10 @@ public:
     Criterio();
     Criterio(int, string, float );
     void modificarCriterio();
-    void agregarCriterio();
     void borrarCriterio();
     void mostrarCriterio();
+    void setTexto(string);
+    void setPorcentajePonderacion(float);
 };
 
 #endif
