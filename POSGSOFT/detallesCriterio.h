@@ -20,7 +20,7 @@ public:
     DetallesCriterio( int, Criterio ); // Constructor
     void setCalificacion();
     void setObservacion();
-    void calcularCalificacionParcial();
+    int calcularCalificacionParcial();
 };
 
 #endif
