@@ -31,6 +31,7 @@ private:
     list<rol> rol;
 public:
     Persona();
+    int agregarRol(int);
 };
 
 #endif

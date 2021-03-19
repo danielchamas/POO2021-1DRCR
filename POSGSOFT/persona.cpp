@@ -1,5 +1,28 @@
 #include "persona.h"
 
+int Persona::agregarRol(int rol)
+{
+    switch(rol)
+    {
+        case 1:
+            this->rol.push_back(rol::director);
+            break;
+        case 2:
+            this->rol.push_back(rol::asistente);
+            break;
+        case 3:
+            this->rol.push_back(rol::jurado);
+            break;
+        case 4:
+            this->rol.push_back(rol::estudiante);
+            break;
+        default:
+            cout << "Opcion incorrecta. Intentalo de nuevo" << endl;
+            return 0;
+    }
+    return 1;
+}
+
 Persona::Persona()
 {
     int opcion;
@@ -15,7 +38,7 @@ Persona::Persona()
         cout << "1. Externo" << endl;
         cout << "2. Interno" << endl;
         cin >> opcion;
-        switch( opcion )
+        switch(opcion)
         {
             case 1:
                 this->tipo = tipo::externo;
@@ -35,27 +58,5 @@ Persona::Persona()
         cout << "3. Jurado" << endl;
         cout << "4. Estudiante" << endl;
         cin >> opcion; 
-        switch( opcion )
-        {
-            case 1:
-                this->rol = rol::director;
-                break;
-            case 2:
-                this->rol = rol::asistente;
-                break;
-            case 3:
-                this->rol = rol::jurado;
-                break;
-            case 4:
-                this->rol = rol::estudiante;
-                break;
-            default:
-                cout << "Error. Opcion incorrecta. Intentelo de nuevo." << endl;
-        }
-    } while(opcion < 1 || opcion > 2);
-}
-
-int main(){
-    Persona Juan;
-    return 0;
+    } while(agregarRol(opcion));
 }
