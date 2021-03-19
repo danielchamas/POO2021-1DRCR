@@ -1,5 +1,5 @@
 #include "persona.h"
-
+ 
 Persona::Persona()
 {
     int opcion;
@@ -30,7 +30,7 @@ Persona::Persona()
     this->agregarRol();
 }
 
-void Persona::agregarRol()
+void Persona::agregarRol() //hola
 {
     int opcion;
     do{
