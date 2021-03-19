@@ -1,28 +1,5 @@
 #include "persona.h"
 
-int Persona::agregarRol(int rol)
-{
-    switch(rol)
-    {
-        case 1:
-            this->rol.push_back(rol::director);
-            break;
-        case 2:
-            this->rol.push_back(rol::asistente);
-            break;
-        case 3:
-            this->rol.push_back(rol::jurado);
-            break;
-        case 4:
-            this->rol.push_back(rol::estudiante);
-            break;
-        default:
-            cout << "Opcion incorrecta. Intentalo de nuevo" << endl;
-            return 0;
-    }
-    return 1;
-}
-
 Persona::Persona()
 {
     int opcion;
@@ -38,25 +15,57 @@ Persona::Persona()
         cout << "1. Externo" << endl;
         cout << "2. Interno" << endl;
         cin >> opcion;
-        switch(opcion)
+        switch( opcion )
         {
             case 1:
-                this->tipo = tipo::externo;
+                this->tipoPersona = tipo::externo;
                 break;
             case 2:
-                this->tipo = tipo::interno;
+                this->tipoPersona = tipo::interno;
                 break;
             default:
                 cout << "Error. Opcion incorrecta. Intentelo de nuevo." << endl;
         }
-    } while(opcion < 1 || opcion > 2);
-    do{ // Se pregunta el rol de la persona. Si escoje una opcion incorrecta le da otro intento
-        // hasta que elija una opcion correcta 
+    } while( opcion < 1 || opcion > 2 );
+    this->agregarRol();
+}
+
+void Persona::agregarRol()
+{
+    int opcion;
+    do{
         cout << "Ingrese el rol de la persona:" << endl;
         cout << "1. Director/Codirector" << endl;
         cout << "2. Asistente" << endl;
         cout << "3. Jurado" << endl;
         cout << "4. Estudiante" << endl;
         cin >> opcion; 
-    } while(agregarRol(opcion));
+        switch( opcion )
+        {
+            case 1:
+                this->rol.push_back(rol::director);
+                break;
+            case 2:
+                this->rol.push_back(rol::asistente);
+                break;
+            case 3:
+                this->rol.push_back(rol::jurado);
+                break;
+            case 4:
+                this->rol.push_back(rol::estudiante);
+                break;
+            default:
+                cout << "Opcion incorrecta. Intentalo de nuevo" << endl;
+        }
+    } while (opcion < 1 || opcion > 4);
+}
+
+string Persona::getNombre()
+{
+    return this->nombre;
+}
+
+tipo Persona::getTipo()
+{
+    return this->tipoPersona;
 }

@@ -27,11 +27,14 @@ private:
     string nombre;
     int id;
     string email;
-    tipo tipo;
-    list<rol> rol;
+    tipo tipoPersona;
+    
 public:
     Persona();
-    int agregarRol(int);
+    list<rol> rol;
+    void agregarRol();
+    string getNombre();
+    tipo getTipo();
 };
 
 #endif

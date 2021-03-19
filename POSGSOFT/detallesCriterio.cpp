@@ -25,3 +25,8 @@ void DetallesCriterio::setObservacion()
     cout << "Ingresa las observaciones respecto al criterio" << endl;
     cin >> this->observacionesJurados;
 }
+
+Criterio DetallesCriterio::getCriterio()
+{
+    return this->criterio;
+}

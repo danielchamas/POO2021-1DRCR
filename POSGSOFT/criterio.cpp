@@ -29,7 +29,7 @@ void Criterio::setPorcentajePonderacion(float porcentaje)
     this->porcentajePonderacion = porcentaje;
 }
 
-void Criterio::modificarCriterio()
+void Criterio::agregarCriterio()
 {
     int opcion, porcentaje;
     string texto;
@@ -58,5 +58,10 @@ void Criterio::modificarCriterio()
             default:
                 cout << "Error. Opcion incorrecta" << endl;
         }
-    } while opcion != 0;
+    } while (opcion != 0);
+}
+
+float Criterio::getPorcentajePonderacion()
+{
+    return this->porcentajePonderacion;
 }

@@ -21,6 +21,7 @@ public:
     void setCalificacion();
     void setObservacion();
     int calcularCalificacionParcial();
+    Criterio getCriterio();
 };
 
 #endif
