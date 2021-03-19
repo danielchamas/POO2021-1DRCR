@@ -30,13 +30,14 @@ Acta::Acta(int numeroActa)
         Pendiente: añadir director, codirector, estudiante y jurados
     */
     this->estadoActa = estadoActa::abierto;
-    this->estadoEvaluacion = estadoEvaluacion::pendiente;
+    this->estadoEval = estadoEvaluacion::pendiente;
+    
 }
 
-int calcularNotafinal()
+int Acta::calcularNotafinal()
 {
     int notaFinal = 0, contadorCriterios = 0;
-for (list<DetallesCriterio>::iterator it = listaDetallesCriterio.begin(); it != listaDetallesCriterio.end(); it++)
+    for (list<DetallesCriterio>::iterator it = listaDetallesCriterio.begin(); it != listaDetallesCriterio.end(); it++)
     {
         notaFinal += it->calcularCalificacionParcial();
         contadorCriterios++;
@@ -47,6 +48,43 @@ for (list<DetallesCriterio>::iterator it = listaDetallesCriterio.begin(); it != 
 
 void Acta::cerrarActa()
 {
-    this->estadoActa = cerrado;
+    this->estadoActa = estadoActa::cerrado;
 }
 
+void Acta::setEstadoActual(int estado)
+{
+    switch(estado)
+    {
+        case 1:
+            this->estadoEval = estadoEvaluacion::aprobado;
+            break;
+        case 2:
+            this->estadoEval = estadoEvaluacion::pendiente;
+            break;
+        case 3:
+            this->estadoEval = estadoEvaluacion::rechazado;
+            break;
+    }
+}
+
+tipoTrabajo Acta::getTipoTrabajo()
+{
+    return this->tipo;
+}
+
+void Acta::incluirObservaciones()
+{
+    cout << "Ingrese las observaciones" << endl;
+    cin >> this->obsevaciones;
+}
+
+void Acta::incluirCondiciones()
+{
+    cout << "Ingrese las condiciones de aprobacion" << endl;
+    cin >> this->condiciones;
+}
+
+estadoEvaluacion Acta::getEstadoEvaluacion()
+{
+    return this->estadoEval;
+}

@@ -42,19 +42,20 @@ private:
     string jurado2;
     list<DetallesCriterio> listaDetallesCriterio; 
     string obsevaciones;
+    string condiciones;
     float calificaciontotal;
     estadoActa estadoActa;
-    estadoEvaluacion estadoEvaluacion;
+    estadoEvaluacion estadoEval;
 public:
+    Acta();
     Acta( int );
     int calcularNotafinal();
     void cerrarActa();
-    void setEstadoActual();
-    void getTipoTrabajo();
+    void setEstadoActual(int);
+    tipoTrabajo getTipoTrabajo();
     void incluirObservaciones();
     void incluirCondiciones();
-    void getEstadoEvaluacion();
-    void setEstadoEvaluacion();
+    estadoEvaluacion getEstadoEvaluacion();
 };
 
 #endif
