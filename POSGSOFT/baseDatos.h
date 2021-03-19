@@ -4,7 +4,7 @@
 #include <iostream>
 #include <list>
 #include "acta.h"
-#include "Criterio.h"
+#include "criterio.h"
 #include "persona.h"
 
 using namespace std;
@@ -12,6 +12,7 @@ using namespace std;
 class BaseDatos
 {
 private:
+    int contadorActas; // Contador para saber el numero del acta al momento de crearla
     list<Acta> listaActas;
     list<Criterio> listaCriterios;
     list<Persona> listaPersonas;
@@ -19,14 +20,14 @@ public:
     BaseDatos();
     void generarArchivo();
     void listarActas();
-    void listarTrabajosJurado();
-    void listarTrabajosProfesor();
-    void listarJurado();
-    void mostrarActasPendientes();
-    void mostrarActasRechazadas();
-    void mostrarJuradosInternos();
-    void mostrarJuradosExternos();
-    void mostrarCriterios();
+    void listarTrabajosJurado( Persona ); // Lista las actas en las que la persona ha sido jurado
+    void listarTrabajosProfesor(Persona); // Lista las actas en las que la persona ha sido jurado interno
+    void listarJurados(); // Listar los jurados participantes en las actas.
+    void listarActasPendientes();
+    void listarActasRechazadas();
+    void listarJuradosInternos();
+    void listarJuradosExternos();
+    void listarCriterios();
     void agregarCriterioLista( Criterio );
     void agregarActaLista( Acta );
 };
