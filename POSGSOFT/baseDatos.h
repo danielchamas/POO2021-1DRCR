@@ -12,7 +12,6 @@ using namespace std;
 class BaseDatos
 {
 private:
-    int contadorActas; // Contador para saber el numero del acta al momento de crearla
     list<Acta> listaActas;
     list<Criterio> listaCriterios;
     list<Persona> listaPersonas;
@@ -22,14 +21,18 @@ public:
     void listarActas();
     void listarTrabajosJurado( Persona ); // Lista las actas en las que la persona ha sido jurado
     void listarTrabajosProfesor(Persona); // Lista las actas en las que la persona ha sido jurado interno
+    void listarTrabajosAplicado();
+    void listarTrabajosInvestigacion();
     void listarJurados(); // Listar los jurados participantes en las actas.
     void listarActasPendientes();
     void listarActasRechazadas();
+    void listarActasAbiertas();
+    void listarActasCerradas();
     void listarJuradosInternos();
     void listarJuradosExternos();
     void listarCriterios();
     void agregarCriterioLista( Criterio );
-    void agregarActaLista( Acta );
+    void agregarActaLista( Acta ); // ALERTA ROJA///
 };
 
 #endif
