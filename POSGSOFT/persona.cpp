@@ -27,7 +27,6 @@ Persona::Persona()
                 cout << "Error. Opcion incorrecta. Intentelo de nuevo." << endl;
         }
     } while( opcion < 1 || opcion > 2 );
-    this->agregarRol();
 }
 
 void Persona::agregarRol() //hola
