@@ -11,6 +11,7 @@ BaseDatos::BaseDatos()
     this->listaCriterios.push_back(Criterio(6, "Manejo y procesamiento de la informacion y bibliografia", 10));
     this->listaCriterios.push_back(Criterio(7, "Calidad y presentacion del documento escrito", 7.5));
     this->listaCriterios.push_back(Criterio(8, "Presentacion oral", 7.5));
+    this->contadorActas = 0;
 }
 
 void BaseDatos::listarCriterios()
@@ -194,3 +195,27 @@ void BaseDatos::listarJuradosInternos()
     }
 }
 
+void BaseDatos::eliminarActas()
+{
+    int acta;
+    cout << "Digite el numero del acta a eliminar: " << endl;
+    cin >> acta;
+    for(list<Acta>::iterator it = listaActas.begin(); it != listaActas.end(); it++)
+    {
+        if(acta == it->getNumero()) // Verifica el numero del acta para poder eliminar
+        {
+            it->eliminarActa();
+            break;
+        }
+        else
+        {
+            cout << "Error. Acta no registrada." << endl;
+        }
+    }   
+}
+
+void BaseDatos::crearActa()
+{
+    Acta actaTemporal(++this->contadorActas);
+    listaActas.push_back(actaTemporal);
+}

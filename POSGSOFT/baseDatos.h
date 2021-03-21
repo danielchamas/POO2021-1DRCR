@@ -12,6 +12,7 @@ using namespace std;
 class BaseDatos
 {
 private:
+    int contadorActas;
     list<Acta> listaActas;
     list<Criterio> listaCriterios;
     list<Persona> listaPersonas;
@@ -32,7 +33,8 @@ public:
     void listarJuradosExternos();
     void listarCriterios();
     void agregarCriterioLista( Criterio );
-    void agregarActaLista( Acta ); // ALERTA ROJA///
+    void crearActa();  
+    void eliminarActas();
 };
 
 #endif
