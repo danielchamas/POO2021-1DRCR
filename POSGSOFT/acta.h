@@ -37,6 +37,7 @@ private:
     string nombreTrabajo;
     tipoTrabajo tipo;
     string periodo;
+    string enfasis;
     Persona estudiante;
     Persona director;
     Persona codirector;
@@ -46,23 +47,31 @@ private:
     string obsevaciones;
     string condiciones;
     float calificacionTotal;
-    estadoActa estadoActa;
+    estadoActa estadoAct; // No pueden ser del mismo nombre
     estadoEvaluacion estadoEval;
 public:
-    Acta();
+    ~Acta();
     Acta(int);
     void calcularNotafinal();
     void cerrarActa();
-    void setEstadoActual(int);
     tipoTrabajo getTipoTrabajo();
     void incluirObservaciones();
     void incluirCondiciones();
+    void setEstadoEvaluacion(int);
     estadoEvaluacion getEstadoEvaluacion();
     void calificarCriterio(int, Criterio);
     void mostrarActa();
     Persona getJurado1();
     Persona getJurado2();
     string getNombreTrabajo();
+    estadoActa getEstadoAct();
+    void eliminarActa();
+    int getNumero();
+    void setEstudiante(Persona);
+    void setJurado1(Persona);
+    void setJurado2(Persona);
+    void setDirector(Persona);
+    void setCodirector(Persona);
 };
 
 #endif

@@ -7,9 +7,9 @@ Acta::Acta(int numeroActa)
     time_t fecha = time(0); // Establece la fecha actual
     this->fecha = ctime(&fecha); // Se convierte a string
     cout << "Ingrese el nombre del acta" << endl;
-    cin >> this->nombreTrabajo;
+    getline(cin >> ws, this->nombreTrabajo);
     do{ // Si no se ingresa una opcion valida, la pregunta se repite hasta que ingrese una valida.
-        cout << "Ingrese el tipo de trabajo del acta" << endl;
+        cout << endl << "Ingrese el tipo de trabajo del acta" << endl;
         cout << "1. Aplicado" << endl;
         cout << "2. Investigacion" << endl;
         cout << "Opcion: ";
@@ -28,12 +28,10 @@ Acta::Acta(int numeroActa)
     } while(opcion < 1 || opcion > 2);
     cout << "Ingrese el periodo" << endl;
     cin >> this->periodo;
-    /*
-        Pendiente: añadir director, codirector, estudiante y jurados
-    */
-    this->estadoActa = estadoActa::abierto;
+    cout << "Ingrese el enfasis" << endl;
+    getline(cin >> ws, this->enfasis);
+    this->estadoAct = estadoActa::abierto;
     this->estadoEval = estadoEvaluacion::pendiente;
-    
 }
 
 void Acta::calcularNotafinal()
@@ -49,10 +47,10 @@ void Acta::calcularNotafinal()
 
 void Acta::cerrarActa()
 {
-    this->estadoActa = estadoActa::cerrado;
+    this->estadoAct = estadoActa::cerrado;
 }
 
-void Acta::setEstadoActual(int estado)
+void Acta::setEstadoEvaluacion(int estado)
 {
     switch(estado)
     {
@@ -68,7 +66,6 @@ void Acta::setEstadoActual(int estado)
         default: 
             cout << "Error. Digite un campo valido";
             break;
-
     }
 }
 
@@ -107,11 +104,12 @@ void Acta::mostrarActa()
     cout << endl;
     cout << "Acta #" << this->numero << endl << endl;
     cout << "Nombre: " << this->nombreTrabajo << endl;
+    cout << "Enfasis: " << this->enfasis << endl;
     cout << "Fecha: " << this->fecha;
-    cout << "Estudiante: " << this->estudiante.getNombre();
-    cout << "Estado del acta: "; //<< static_cast<char>(this->estadoActa);
+    cout << "Estudiante: " << this->estudiante.getNombre() << endl;
+    cout << "Estado del acta: ";
 
-    if(this->estadoActa == estadoActa::abierto)
+    if(this->estadoAct == estadoActa::abierto)
     
         cout << "Abierto" << endl;
     
@@ -121,7 +119,7 @@ void Acta::mostrarActa()
     }
     if(this->calificacionTotal < 0 || this->calificacionTotal > 5)
     {
-        cout << "Calificacion: NA";
+        cout << "Calificacion: NA" << endl;
     }
     else
     {
@@ -139,7 +137,7 @@ void Acta::mostrarActa()
     else
     {
         cout << "Rechazado" << endl;
-    }
+    } 
 }
 
 Persona Acta::getJurado1()
@@ -147,7 +145,7 @@ Persona Acta::getJurado1()
     return this->jurado1;
 }
 
-Persona Acta::getJurado1()
+Persona Acta::getJurado2()
 {
     return this->jurado2;
 }
@@ -155,4 +153,59 @@ Persona Acta::getJurado1()
 string Acta::getNombreTrabajo()
 {
     return this->nombreTrabajo;
+}
+
+estadoActa Acta::getEstadoAct()
+{
+    return this->estadoAct;
+}
+
+Acta::~Acta()
+{
+    
+}
+
+//nombreDeLaVariable.~Acta();
+
+void Acta::eliminarActa()
+{
+    this->jurado1.listaRoles.remove(rol::jurado);
+    this->jurado2.listaRoles.remove(rol::jurado);
+    this->estudiante.listaRoles.remove(rol::estudiante);
+    this->director.listaRoles.remove(rol::director);
+    if( this->codirector.getNombre() != "NA" )
+    {
+        this->codirector.listaRoles.remove(rol::director);
+    }
+    this->~Acta();
+}
+
+int Acta::getNumero()
+{
+    return this->numero;
+}
+
+void Acta::setEstudiante(Persona estudiante)
+{
+    this->estudiante = estudiante;
+}
+
+void Acta::setJurado1(Persona jurado1)
+{
+    this->jurado1 = jurado1;
+}
+
+void Acta::setJurado2(Persona jurado2)
+{
+    this->jurado2 = jurado2;
+}
+
+void Acta::setDirector(Persona director)
+{
+    this->director = director;
+}
+
+void Acta::setCodirector(Persona codirector)
+{
+    this->codirector = codirector;
 }
