@@ -63,6 +63,7 @@ public:
     void mostrarActa();
     Persona getJurado1();
     Persona getJurado2();
+    Persona getDirector();
     string getNombreTrabajo();
     estadoActa getEstadoAct();
     void eliminarActa();

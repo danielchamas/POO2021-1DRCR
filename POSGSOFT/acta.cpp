@@ -209,3 +209,8 @@ void Acta::setCodirector(Persona codirector)
 {
     this->codirector = codirector;
 }
+
+Persona Acta::getDirector()
+{
+    return this->director;
+}
