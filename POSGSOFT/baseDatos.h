@@ -20,7 +20,7 @@ public:
     BaseDatos();
     void generarArchivo();
     void listarActas();
-    void listarTrabajosJurado( Persona ); // Lista las actas en las que la persona ha sido jurado
+    void listarTrabajosJurado(Persona); // Lista las actas en las que la persona ha sido jurado
     void listarTrabajosProfesor(Persona); // Lista las actas en las que la persona ha sido jurado interno
     void listarTrabajosAplicado();
     void listarTrabajosInvestigacion();
@@ -32,9 +32,12 @@ public:
     void listarJuradosInternos();
     void listarJuradosExternos();
     void listarCriterios();
-    void agregarCriterioLista( Criterio );
+    void agregarCriterioLista(Criterio);
     void crearActa();  
     void eliminarActas();
+    void crearPersona();
+    Persona buscarPersonaRol(rol);
+    Persona validarPersona();
 };
 
 #endif
