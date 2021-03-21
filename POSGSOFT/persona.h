@@ -25,16 +25,18 @@ class Persona
 {
 private:
     string nombre;
-    int id;
+    long int id;
     string email;
     tipo tipoPersona;
     
 public:
     Persona();
-    list<rol> rol;
-    void agregarRol();
+    Persona(string, int, string, tipo);
+    list<rol> listaRoles;
+    void agregarRol(rol);
     string getNombre();
     tipo getTipo();
+    long int getId();
 };
 
 #endif
