@@ -5,8 +5,9 @@
 
 int main()
 {
-    BaseDatos juanito;
+    BaseDatos puj;
     int opcion, opcion2, opcion3, opcion3a, opcion4, opcion4a;
+    Persona personaTemporal;
     cout << endl;
     cout << "======SISTEMA BASE DE DATOS ACTAS DE GRADO====== " << endl;
     do
@@ -24,9 +25,14 @@ int main()
                     {
                         case 0:
                             opcion = 0;
+                            break;
                         case 1:
+                            puj.crearActa();
                             break;
                         case 2: 
+                            puj.crearPersona();
+                            break;
+                        case 3: 
                             opcion2 = 0;
                             break;
                         default:
@@ -55,11 +61,16 @@ int main()
                                         opcion3 = 0;
                                         break;
                                     case 1:
-                                        juanito.listarActas();
+                                        puj.listarActas();
+                                        getch();
                                         break;
                                     case 2:
+                                        puj.listarActasAbiertas();
+                                        getch();
                                         break;
                                     case 3:
+                                        puj.listarActasCerradas();
+                                        getch();
                                         break;
                                     case 4:
                                         opcion3a = 0;
@@ -71,30 +82,49 @@ int main()
                             } while( opcion3a != 0 );
                             break;
                         case 2:
+                            puj.listarTrabajosAplicado();
+                            getch();
                             break;
                         case 3:
+                            puj.listarTrabajosInvestigacion();
+                            getch();
                             break;
                         case 4:
+                            personaTemporal = puj.validarPersona();
+                            puj.listarTrabajosProfesor(personaTemporal);
+                            getch();
                             break;
                         case 5:
+                            personaTemporal = puj.validarPersona();
+                            if(personaTemporal.getNombre() != "NA")
+                            {
+                                puj.listarTrabajosJurado(personaTemporal);
+                            }
+                            getch();
                             break;
                         case 6:
+
                             break;
                         case 7:
                             break;
                         case 8:
                             break;
-                        case 9:
-                            
+                        case 9: 
                             break;
                         case 10:
-                
                             break;
                         case 11:
-                            juanito.mostrarCriterios();
+                            puj.eliminarActas();
                             getch();
                             break;
                         case 12:
+                            puj.listarCriterios();
+                            getch();
+                            break;
+                        case 13:
+                
+                            break;
+                        case 14:
                             opcion3 = 0;
                             break;
                         default:
