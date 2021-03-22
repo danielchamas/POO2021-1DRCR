@@ -12,7 +12,7 @@ Persona::Persona(string nombre, int id, string email, tipo tipoPersona)
     this->tipoPersona = tipoPersona;
 }
 
-void Persona::agregarRol(rol rol) 
+void Persona::agregarRol(rol rol) //Agrega roles a la lista de de roles de la persona. Ya que una persona puede ser Director o jurado.
 {
     this->listaRoles.push_back(rol);
 }

@@ -32,11 +32,11 @@ Acta::Acta(int numeroActa)
     cout << "Ingrese el enfasis" << endl;
     getline(cin >> ws, this->enfasis);
     this->estadoAct = estadoActa::abierto;
-    this->estadoEval = estadoEvaluacion::aprobado; /// cambiar a pendiente????????????????????????????????????????
-    this->calificacionTotal = 0;
+    this->estadoEval = estadoEvaluacion::pendiente; 
+    this->calificacionTotal = 0;   // calificacion por defecto al crear el acta.
 }
 
-void Acta::calcularNotaFinal()
+float Acta::calcularNotaFinal()
 {
     float notaFinal = 0;
     for (list<DetallesCriterio>::iterator it = listaDetallesCriterio.begin(); it != listaDetallesCriterio.end(); it++)
@@ -45,7 +45,7 @@ void Acta::calcularNotaFinal()
         notaFinal += it->calcularCalificacionParcial() * it->getCriterio().getPorcentajePonderacion() / 100;
     }
     this->calificacionTotal = notaFinal;
-    if( notaFinal > 3.5 && this->condiciones == "")
+    if( notaFinal > 3.5 && this->condiciones == "") // "" es igual a vacío
     {
         this->estadoEval = estadoEvaluacion::aprobado;
     }
@@ -53,7 +53,7 @@ void Acta::calcularNotaFinal()
     {
          this->estadoEval = estadoEvaluacion::rechazado;
     }
-    else if(this->condiciones != "")
+    else if(this->condiciones != "") // Si tiene condiciones el estado del acta es pendiente.
     {
         this->estadoEval = estadoEvaluacion::pendiente;
     }
@@ -61,27 +61,8 @@ void Acta::calcularNotaFinal()
 
 void Acta::cerrarActa()
 {
-    this->estadoAct = estadoActa::cerrado;
+    this->estadoAct = estadoActa::cerrado; //Al cerrar el acta se genera automaticamente el archivo txt con la informacion del acta.
     generarArchivo();
-}
-
-void Acta::setEstadoEvaluacion(int estado)
-{
-    switch(estado)
-    {
-        case 1:
-            this->estadoEval = estadoEvaluacion::aprobado;
-            break;
-        case 2:
-            this->estadoEval = estadoEvaluacion::pendiente;
-            break;
-        case 3:
-            this->estadoEval = estadoEvaluacion::rechazado;
-            break;
-        default: 
-            cout << "Error. Digite un campo valido";
-            break;
-    }
 }
 
 tipoTrabajo Acta::getTipoTrabajo()
@@ -91,11 +72,11 @@ tipoTrabajo Acta::getTipoTrabajo()
 
 void Acta::incluirObservaciones()
 {
-    cout << "Ingrese las observaciones" << endl;
+    cout << "Ingrese las observaciones:" << endl;
     getline(cin >> ws, this->observaciones);
 }
 
-void Acta::incluirCondiciones()
+void Acta::evaluarCondiciones()
 {
     int opcion;
     cout << endl;
@@ -111,13 +92,12 @@ void Acta::incluirCondiciones()
             this->calcularNotaFinal();
             break;
         case 2:
-            this->condiciones = "";
+            this->borrarCondiciones();
             this->calcularNotaFinal();
             break;
         default:
             cout << "Error. Opcion no disponible." << endl;
-    }
-    
+    }  
 }
 
 estadoEvaluacion Acta::getEstadoEvaluacion()
@@ -186,24 +166,19 @@ estadoActa Acta::getEstadoAct()
     return this->estadoAct;
 }
 
-Acta::~Acta()
-{
-    
-}
-
-//nombreDeLaVariable.~Acta();
+Acta::~Acta(){} // Destructor
 
 void Acta::eliminarActa()
 {
-    this->jurado1.listaRoles.remove(rol::jurado);
+    this->jurado1.listaRoles.remove(rol::jurado);     //Remover los roles de las personas del acta.
     this->jurado2.listaRoles.remove(rol::jurado);
     this->estudiante.listaRoles.remove(rol::estudiante);
     this->director.listaRoles.remove(rol::director);
-    if( this->codirector.getNombre() != "NA" )
+    if( this->codirector.getNombre() != "NA" )        //Verificar si el acta tenia codirector antes de eliminar el rol
     {
         this->codirector.listaRoles.remove(rol::director);
     }
-    this->~Acta();
+    this->~Acta();  // Implementación del destructor del acta 
 }
 
 int Acta::getNumero()
@@ -242,23 +217,18 @@ Persona Acta::getDirector()
 }
 
 void Acta::calificarCriterios()
-
 {
 
     for (list<DetallesCriterio>::iterator it = listaDetallesCriterio.begin(); it != listaDetallesCriterio.end(); it++)
-    {
-        cout << endl << it->getCriterio().getIdentificador() << ". ";
-        cout << it->getCriterio().getTexto() << endl << endl; // Muestra el nombre del criterio
+    {   // Se recorre la lista de detallesCriterio para calificar los 8 criterios a la vez
+        cout << endl << it->getCriterio().getIdentificador() << ". "; //Muestra el identificador del criterio.
+        cout << it->getCriterio().getTexto() << endl << endl; // Muestra el nombre del criterio.
         it->setCalificacion();
         it->setObservacion();
     }
     this->calcularNotaFinal();
 }
 
-void Acta::borrarObservaciones()
-{
-    this->condiciones = "";
-}
 void Acta::borrarCondiciones()
 {
     this->condiciones = "";

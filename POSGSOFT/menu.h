@@ -13,6 +13,4 @@ int menuDirector();
 int menuCalificacionJurado();
 int menuJurado();
 
-
-
 #endif

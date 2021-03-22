@@ -14,11 +14,13 @@ private:
 public:
     Criterio();
     Criterio(int, string, float );
-    void agregarCriterio();
     void mostrarCriterio();
     void setTexto(string);
     void setPorcentajePonderacion(float);
     float getPorcentajePonderacion();
+    void setIdentificador(int);
+    int getIdentificador();
+    string getTexto();
 };
 
 #endif

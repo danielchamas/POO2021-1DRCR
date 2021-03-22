@@ -13,7 +13,7 @@ enum class tipo
     externo = 2
 };
 
-enum class rol
+enum class rol // Usamos enum class para evitar problemas con el tipo de dato del enum. Así será solo tipo class rol.
 {
     director = 1,
     asistente = 2,
@@ -25,14 +25,14 @@ class Persona
 {
 private:
     string nombre;
-    long int id;
+    long int id; 
     string email;
     tipo tipoPersona;
     
 public:
     Persona();
     Persona(string, int, string, tipo);
-    list<rol> listaRoles;
+    list<rol> listaRoles; // Por cada participacion en un acta, se le añade el rol a la persona
     void agregarRol(rol);
     string getNombre();
     tipo getTipo();
