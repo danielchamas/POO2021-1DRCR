@@ -1,7 +1,11 @@
 #include "baseDatos.h"
+#include <conio.h>
 
 BaseDatos::BaseDatos()
 {
+    
+    this->contadorActas = 1;
+    this->contadorCriterios = 8;
     // Se declaran los 8 criterios por defecto
     this->listaCriterios.push_back(Criterio(1, "Desarrollo y profundidad en el tratamiento del tema", 20));
     this->listaCriterios.push_back(Criterio(2, "Desafio academico y cientifico del tema", 15));
@@ -11,7 +15,10 @@ BaseDatos::BaseDatos()
     this->listaCriterios.push_back(Criterio(6, "Manejo y procesamiento de la informacion y bibliografia", 10));
     this->listaCriterios.push_back(Criterio(7, "Calidad y presentacion del documento escrito", 7.5));
     this->listaCriterios.push_back(Criterio(8, "Presentacion oral", 7.5));
-    this->contadorActas = 0;
+    this->listaPersonas.push_back(Persona("Juan", 1, "correo", tipo::externo));
+    this->listaPersonas.push_back(Persona("Maria", 2, "asd", tipo::externo));
+    this->listaPersonas.push_back(Persona("Pedro", 3, "esd", tipo::interno));
+    this->listaPersonas.push_back(Persona("Pipe", 4, "isd", tipo::interno));
 }
 
 void BaseDatos::listarCriterios()
@@ -38,9 +45,7 @@ void BaseDatos::listarActasAbiertas()
         {
             it->mostrarActa();
         }
-        
     }
-    
 }
 void BaseDatos::listarActasCerradas()
 {
@@ -49,10 +54,8 @@ void BaseDatos::listarActasCerradas()
         if(it->getEstadoAct() == estadoActa::cerrado)
         {
             it->mostrarActa();
-        }
-        
-    }
-    
+        }    
+    }  
 }
 
 void BaseDatos::listarActasPendientes()
@@ -81,7 +84,7 @@ void BaseDatos::listarTrabajosJurado(Persona persona)
 {
     int numeroActas = 0;
     cout << endl;
-    cout << "Actas que ha participado como jurado:" << endl << endl;
+    cout << endl << "Actas que ha participado como jurado:" << endl << endl;
     for(list<Acta>::iterator it = listaActas.begin(); it != listaActas.end(); it++)
     {   // Verifica si el nombre de la persona esta de jurado en algun acta.
         if( (it->getJurado1()).getNombre() == persona.getNombre() || 
@@ -105,8 +108,7 @@ void BaseDatos::listarTrabajosProfesor(Persona persona)
     }
     for(list<Acta>::iterator it = listaActas.begin(); it != listaActas.end(); it++)
     {   // Verifica si el nombre de la persona esta de jurado en algun acta.
-        if( (it->getJurado1()).getNombre() == persona.getNombre() || 
-        (it->getJurado2()).getNombre() == persona.getNombre())
+        if( (it->getDirector()).getNombre() == persona.getNombre())
         {
             cout << it->getNombreTrabajo() << endl;
             numeroActas++;
@@ -149,14 +151,16 @@ void BaseDatos::listarTrabajosInvestigacion()
 
 void BaseDatos::listarJurados()
 {
-    cout << "Lista de jurados participantes: " << endl << endl;
+    int cont = 0;
+    cout << endl << "Lista de jurados participantes: " << endl << endl;
     for (list<Persona>::iterator it = listaPersonas.begin(); it != listaPersonas.end(); it++)
     {
         for(list<rol>::iterator it2 = it->listaRoles.begin(); it2 != it->listaRoles.end(); it2++) 
         {
             if(*it2 == rol::jurado) // Verifica si la persona tiene rol de jurado.
             {
-                cout << it->getNombre() << endl;
+                cont++;
+                cout << cont << ")" << it->getNombre() << endl;
                 break;
             }
         }
@@ -165,14 +169,16 @@ void BaseDatos::listarJurados()
 
 void BaseDatos::listarJuradosExternos()
 {
-    cout << "Lista de jurados externos: " << endl << endl;
+    int cont = 0;
+    cout << endl << "Lista de jurados externos: " << endl << endl;
     for (list<Persona>::iterator it = listaPersonas.begin(); it != listaPersonas.end(); it++)
     {
         for(list<rol>::iterator it2 = it->listaRoles.begin(); it2 != it->listaRoles.end(); it2++)
         {
             if(*it2 == rol::jurado && it->getTipo() == tipo::externo) // Verifica si la persona tiene rol de jurado y es externo.
             {
-                cout << it->getNombre() << endl;
+                cont++;
+                cout << cont << ") "<< it->getNombre() << endl;
                 break;
             }
         }
@@ -181,14 +187,16 @@ void BaseDatos::listarJuradosExternos()
 
 void BaseDatos::listarJuradosInternos()
 {
-    cout << "Lista de jurados internos: " << endl << endl;
+    int cont = 0;
+    cout << endl << "Lista de jurados internos: " << endl << endl;
     for (list<Persona>::iterator it = listaPersonas.begin(); it != listaPersonas.end(); it++)
     {
         for(list<rol>::iterator it2 = it->listaRoles.begin(); it2 != it->listaRoles.end(); it2++)
         {
             if(*it2 == rol::jurado && it->getTipo() == tipo::interno) // Verifica si la persona tiene rol de jurado y es externo.
             {
-                cout << it->getNombre() << endl;
+                cont++;
+                cout << cont << ") " << it->getNombre() << endl;
                 break;
             }
         }
@@ -198,20 +206,18 @@ void BaseDatos::listarJuradosInternos()
 void BaseDatos::eliminarActas()
 {
     int acta;
-    cout << "Digite el numero del acta a eliminar: " << endl;
+    cout << endl << "Digite el numero del acta a eliminar: " << endl;
     cin >> acta;
     for(list<Acta>::iterator it = listaActas.begin(); it != listaActas.end(); it++)
     {
         if(acta == it->getNumero()) // Verifica el numero del acta para poder eliminar
         {
             it->eliminarActa();
-            break;
+            listaActas.erase(it); //Elimina el objeto de la lista de actas
+            return;
         }
-        else
-        {
-            cout << "Error. Acta no registrada." << endl;
-        }
-    }   
+    }
+    cout << "Error. Acta no registrada." << endl;
 }
 
 Persona BaseDatos::buscarPersonaRol(rol estudiante)
@@ -221,7 +227,7 @@ Persona BaseDatos::buscarPersonaRol(rol estudiante)
     cin >> id;
     for (list<Persona>::iterator it = listaPersonas.begin(); it != listaPersonas.end(); it++)
     {
-        if(it->getId() == id)
+        if(it->getId() == id) // Verifica el Id en la lista de personas para ver si ya esta registrada.
         {
             it->agregarRol(estudiante);
             return *it;
@@ -236,7 +242,7 @@ void BaseDatos::crearActa()
     int opcion;
     long int id;
     Persona personaTemporal;
-    Acta actaTemporal(++this->contadorActas);
+    Acta actaTemporal(this->contadorActas);
     cout << "Estudiante" << endl;
     // Incorporando estudiante
     personaTemporal = buscarPersonaRol(rol::estudiante);
@@ -283,11 +289,17 @@ void BaseDatos::crearActa()
                 return;
             }
             actaTemporal.setCodirector(personaTemporal);
+            break;
         default:
             actaTemporal.setCodirector(Persona("NA", 0, "NA", tipo::externo));
     }
+    for (list<Criterio>::iterator it = listaCriterios.begin(); it != listaCriterios.end(); it++)
+    {
+        actaTemporal.listaDetallesCriterio.push_back(DetallesCriterio(*it));
+    }
     listaActas.push_back(actaTemporal);
     cout << "Acta creada con exito" << endl << endl;
+    this->contadorActas++;
 }
 
 void BaseDatos::crearPersona()
@@ -350,4 +362,133 @@ Persona BaseDatos::validarPersona()
     }
     cout << "ID no registrado." << endl;
     return Persona("NA", 0, "NA", tipo::externo);
+}
+
+float BaseDatos::calcularPorcentajeTotal()
+{
+    float sumaPorcentajes;
+    for (list<Criterio>::iterator it = listaCriterios.begin(); it != listaCriterios.end(); it++)
+    {
+        sumaPorcentajes += it->getPorcentajePonderacion();
+    }
+    return sumaPorcentajes;
+}
+
+int BaseDatos::verificarPorcentaje()
+{
+    int id;
+    float porcentaje, sumaPorcentajes;
+    while(sumaPorcentajes != 100)
+    {
+        cout << endl << "El porcentaje de ponderacion total no es igual a 100%" << endl;
+        listarCriterios();
+        cout << endl << "Porcentaje total actual: " << calcularPorcentajeTotal() << endl;
+        cout << "Elija un criterio para cambiar su porcentaje: ";
+        cin >> id; cout << endl;
+        for (list<Criterio>::iterator it = listaCriterios.begin(); it != listaCriterios.end(); it++)
+        {
+            if(it->getIdentificador() == id)
+            {
+                cout << endl << "Ingrese el nuevo porcentaje de ponderacion: ";
+                cin >> porcentaje; cout << endl;
+                it->setPorcentajePonderacion(porcentaje);
+                break;
+            }
+        }
+        sumaPorcentajes = calcularPorcentajeTotal();
+    }
+    cout << endl << "Porcentajes de ponderacion correctamente balanceados." << endl;
+    getch();
+}
+
+void BaseDatos::crearCriterio()
+{
+    int id = ++this->contadorCriterios;
+    string texto;
+    float porcentaje;
+    cout << "Ingresa el nombre del criterio" << endl;
+    getline(cin >> ws, texto);
+    cout << "Ingresa el porcentaje de ponderacion" << endl;
+    cin >> porcentaje;
+    Criterio criterioTemporal(id, texto, porcentaje);
+    listaCriterios.push_back(criterioTemporal);
+    verificarPorcentaje();
+}
+
+int BaseDatos::validarActa()
+{
+    int id;
+    cout << endl << "Ingrese el ID del acta a calificar: ";
+    cin >> id;
+    cout << endl;
+    for(list<Acta>::iterator it = listaActas.begin(); it != listaActas.end(); it++)
+    {
+        if(it->getNumero() == id)
+        {
+            return id;
+        }
+    }
+    return 0;
+}
+
+void BaseDatos::calificarCriteriosActa(int id)
+{
+    for(list<Acta>::iterator it = listaActas.begin(); it != listaActas.end(); it++)
+    {
+        if(it->getNumero() == id)
+        {
+            it->calificarCriterios();
+            return;
+        }
+    }
+    cout << "Error. Acta no encontrada." << endl;
+}
+
+void BaseDatos::incluirObservacionesActa(int id)
+{
+    for(list<Acta>::iterator it = listaActas.begin(); it != listaActas.end(); it++)
+    {
+        if(it->getNumero() == id)
+        {
+            it->incluirObservaciones();
+            return;
+        }
+    }
+    cout << "Error. Acta no encontrada." << endl;
+}
+
+void BaseDatos::incluirCondicionesActa(int id)
+{
+    for(list<Acta>::iterator it = listaActas.begin(); it != listaActas.end(); it++)
+    {
+        if(it->getNumero() == id)
+        {
+            it->incluirCondiciones();
+            return;
+        }
+    }
+    cout << "Error. Acta no encontrada." << endl;
+}
+
+void BaseDatos::cerrarActas(int id)
+{
+    for(list<Acta>::iterator it = listaActas.begin(); it != listaActas.end(); it++)
+    {
+        if(it->getNumero() == id)
+        {
+            if(it->getEstadoEvaluacion() != estadoEvaluacion::pendiente)
+            {
+                it->cerrarActa();
+                cout << endl << "====Acta cerrada exitosamente===" << endl;
+                getch();
+
+            }
+            else
+            {
+                cout << endl << "===No se puede cerrar un acta pendiente===" << endl;
+            }
+            return;
+        }
+    }
+    cout << "Error. Acta no encontrada." << endl;
 }

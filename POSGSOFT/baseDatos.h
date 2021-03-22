@@ -12,13 +12,12 @@ using namespace std;
 class BaseDatos
 {
 private:
-    int contadorActas;
+    int contadorActas, contadorCriterios;
     list<Acta> listaActas;
     list<Criterio> listaCriterios;
     list<Persona> listaPersonas;
 public:
     BaseDatos();
-    void generarArchivo();
     void listarActas();
     void listarTrabajosJurado(Persona); // Lista las actas en las que la persona ha sido jurado
     void listarTrabajosProfesor(Persona); // Lista las actas en las que la persona ha sido jurado interno
@@ -32,12 +31,19 @@ public:
     void listarJuradosInternos();
     void listarJuradosExternos();
     void listarCriterios();
-    void agregarCriterioLista(Criterio);
     void crearActa();  
     void eliminarActas();
     void crearPersona();
     Persona buscarPersonaRol(rol);
     Persona validarPersona();
+    void crearCriterio();
+    int verificarPorcentaje();
+    float calcularPorcentajeTotal();
+    void calificarCriteriosActa(int);
+    void incluirObservacionesActa(int);
+    void incluirCondicionesActa(int);
+    int validarActa();
+    void cerrarActas(int);
 };
 
 #endif
