@@ -1,4 +1,5 @@
 #include "acta.h"
+#include <iomanip>
 
 Acta::Acta(int numeroActa)
 {
@@ -31,10 +32,11 @@ Acta::Acta(int numeroActa)
     cout << "Ingrese el enfasis" << endl;
     getline(cin >> ws, this->enfasis);
     this->estadoAct = estadoActa::abierto;
-    this->estadoEval = estadoEvaluacion::pendiente;
+    this->estadoEval = estadoEvaluacion::aprobado; /// cambiar a pendiente????????????????????????????????????????
+    this->calificacionTotal = 0;
 }
 
-void Acta::calcularNotafinal()
+void Acta::calcularNotaFinal()
 {
     float notaFinal = 0;
     for (list<DetallesCriterio>::iterator it = listaDetallesCriterio.begin(); it != listaDetallesCriterio.end(); it++)
@@ -43,11 +45,24 @@ void Acta::calcularNotafinal()
         notaFinal += it->calcularCalificacionParcial() * it->getCriterio().getPorcentajePonderacion() / 100;
     }
     this->calificacionTotal = notaFinal;
+    if( notaFinal > 3.5 && this->condiciones == "")
+    {
+        this->estadoEval = estadoEvaluacion::aprobado;
+    }
+    else if( notaFinal <= 3.5 && this->condiciones == "")
+    {
+         this->estadoEval = estadoEvaluacion::rechazado;
+    }
+    else if(this->condiciones != "")
+    {
+        this->estadoEval = estadoEvaluacion::pendiente;
+    }
 }
 
 void Acta::cerrarActa()
 {
     this->estadoAct = estadoActa::cerrado;
+    generarArchivo();
 }
 
 void Acta::setEstadoEvaluacion(int estado)
@@ -77,26 +92,37 @@ tipoTrabajo Acta::getTipoTrabajo()
 void Acta::incluirObservaciones()
 {
     cout << "Ingrese las observaciones" << endl;
-    cin >> this->obsevaciones;
+    getline(cin >> ws, this->observaciones);
 }
 
 void Acta::incluirCondiciones()
 {
-    cout << "Ingrese las condiciones de aprobacion" << endl;
-    cin >> this->condiciones;
+    int opcion;
+    cout << endl;
+    cout << "1. Agregar condiciones" << endl;
+    cout << "2. Eliminar condiciones" << endl;
+    cout << "Opcion: ";
+    cin >> opcion;
+    switch(opcion)
+    {
+        case 1:
+            cout << "Ingrese las condiciones de aprobacion:" << endl;
+            getline(cin >> ws, this->condiciones);
+            this->calcularNotaFinal();
+            break;
+        case 2:
+            this->condiciones = "";
+            this->calcularNotaFinal();
+            break;
+        default:
+            cout << "Error. Opcion no disponible." << endl;
+    }
+    
 }
 
 estadoEvaluacion Acta::getEstadoEvaluacion()
 {
     return this->estadoEval;
-}
-
-void Acta::calificarCriterio(int id, Criterio criterio)
-{
-    DetallesCriterio criterioTemporal(id, criterio); // Aqui se guarda la info para luego añadirla a la lista
-    criterioTemporal.setCalificacion();
-    criterioTemporal.setObservacion();
-    this->listaDetallesCriterio.push_back(criterioTemporal); //Se agrega a la lista Detalles criterio
 }
 
 void Acta::mostrarActa()
@@ -117,7 +143,7 @@ void Acta::mostrarActa()
     {
         cout << "Cerrado" << endl;
     }
-    if(this->calificacionTotal < 0 || this->calificacionTotal > 5)
+    if(this->calificacionTotal <= 0 || this->calificacionTotal > 5)
     {
         cout << "Calificacion: NA" << endl;
     }
@@ -213,4 +239,80 @@ void Acta::setCodirector(Persona codirector)
 Persona Acta::getDirector()
 {
     return this->director;
+}
+
+void Acta::calificarCriterios()
+
+{
+
+    for (list<DetallesCriterio>::iterator it = listaDetallesCriterio.begin(); it != listaDetallesCriterio.end(); it++)
+    {
+        cout << endl << it->getCriterio().getIdentificador() << ". ";
+        cout << it->getCriterio().getTexto() << endl << endl; // Muestra el nombre del criterio
+        it->setCalificacion();
+        it->setObservacion();
+    }
+    this->calcularNotaFinal();
+}
+
+void Acta::borrarObservaciones()
+{
+    this->condiciones = "";
+}
+void Acta::borrarCondiciones()
+{
+    this->condiciones = "";
+}
+
+void Acta::generarArchivo()
+{
+    string nombreArchivo = "acta" + to_string(this->getNumero()) + ".txt";
+    ofstream file(nombreArchivo);
+    if (!file.is_open())
+    {
+        cout << "Error al abrir archivo" << endl;
+    }
+    else
+    {
+        file << "\t\t\t       Pontificia Universidad Javeriana Cali" << endl;
+        file << "\t\t\t\t    Facultad de Ingenieria" << endl;
+        file << "\t\t\t\t    Maestria en Ingenieria" << endl << endl;
+        file << "  ACTA: " << this->numero << "\t\t\t\t\t\t\t       Fecha: " << this->fecha << endl;
+        file << "\t\t\t   ACTA DE EVALUACIÓN DE TRABAJO DE GRADO" << endl << endl;
+        file << "  Trabajo de grado denominado: " << '"' << this->nombreTrabajo << '"' << endl << endl;
+        file << "  Autor:\t      " << this->estudiante.getNombre() << "\t" << "ID:" << this->estudiante.getId() << endl << endl;
+        file << "  Periodo:\t      " << this->periodo << endl << endl;
+        file << "  Director:\t      " << this->director.getNombre() << endl << endl;
+        file << "  Co-Director:\t      " << this->codirector.getNombre() << endl << endl;
+        file << "  Énfasis en:\t      " << this->enfasis << endl << endl;
+        if(this->tipo == tipoTrabajo::aplicado)
+        {
+            file << "  Modalidad:\t      Aplicado" <<  endl << endl;
+        }
+        else
+        {
+            file << "  Modalidad:\t      Investigación" <<  endl << endl;
+        }
+        file << "  Jurado 1:\t      " << this->jurado1.getNombre() << endl << endl;
+        file << "  Jurado 2:\t      " << this->jurado2.getNombre() << endl << endl;
+        file << "  En atención al desarrollo de este Trabajo de Grado y al documento y sustentación que presentó el(la) autor(a)," << endl;
+        file << "  los Jurados damos las siguientes calificaciones parciales y observaciones (los criterios a evaluar y sus" << endl;
+        file << "  ponderaciones se estipulan en el artículo 7.1 de las Directrices para Trabajo de Grado de Maestría):" << endl << endl;
+        for(list<DetallesCriterio>::iterator it = listaDetallesCriterio.begin(); it != listaDetallesCriterio.end(); it++)
+        {
+        file << "  " << (it->getCriterio()).getIdentificador() << ". " << (it->getCriterio()).getTexto() << ":" << endl << endl;
+        file << "\tCalificación parcial: " << it->calcularCalificacionParcial();
+        file << "   \t\t\t\t\t\t\t\tPonderacion: " << (it->getCriterio()).getPorcentajePonderacion() << endl;
+        file << "\tObservaciones: " << it->getObservacion() << endl << endl;
+        }
+        file << "  Como resultado de estas calificaciones parciales y sus ponderaciones, la calificación del Trabajo de" << endl;
+        file << "  Grado es: " << setprecision(2) << this->calificacionTotal << endl << endl;
+        file << "  Observaciones adicionales: " << this->observaciones << endl << endl;
+        file << "  La calificación final queda sujeta a que se implementen las siguientes correcciones: " << this->condiciones << endl << endl;
+        file << "--------------------------------------------------------------------------------------------------------------------" << endl;
+        file << "\t\t\t\t    Firmado\t\t   Firmado" << endl;
+        file << "\t\t\t    ________________________  ________________________" << endl;
+        file << "\t\t\t\tFirma del Jurado 1\tFirma del Jurado 2" << endl;
+
+    }
 }

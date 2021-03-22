@@ -6,6 +6,8 @@
 #include "detallesCriterio.h"
 #include <ctime>
 #include "persona.h"
+#include <fstream>
+
 using std::list;
 using namespace std;
 
@@ -43,8 +45,7 @@ private:
     Persona codirector;
     Persona jurado1;
     Persona jurado2;
-    list<DetallesCriterio> listaDetallesCriterio; 
-    string obsevaciones;
+    string observaciones;
     string condiciones;
     float calificacionTotal;
     estadoActa estadoAct; // No pueden ser del mismo nombre
@@ -52,14 +53,15 @@ private:
 public:
     ~Acta();
     Acta(int);
-    void calcularNotafinal();
+    list<DetallesCriterio> listaDetallesCriterio; 
+    git calcularNotaFinal();
     void cerrarActa();
     tipoTrabajo getTipoTrabajo();
     void incluirObservaciones();
     void incluirCondiciones();
     void setEstadoEvaluacion(int);
     estadoEvaluacion getEstadoEvaluacion();
-    void calificarCriterio(int, Criterio);
+    void calificarCriterios();
     void mostrarActa();
     Persona getJurado1();
     Persona getJurado2();
@@ -73,6 +75,9 @@ public:
     void setJurado2(Persona);
     void setDirector(Persona);
     void setCodirector(Persona);
+    void borrarObservaciones();
+    void borrarCondiciones();
+    void generarArchivo();
 };
 
 #endif
