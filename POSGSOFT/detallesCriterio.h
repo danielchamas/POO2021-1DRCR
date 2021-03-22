@@ -9,19 +9,18 @@ using namespace std;
 class DetallesCriterio
 {
 private:
-
-    int id;
     Criterio criterio;
     float calificacionJurado1;
     float calificacionJurado2;
     string observacionesJurados;
 
 public:
-    DetallesCriterio( int, Criterio ); // Constructor
+    DetallesCriterio(Criterio); // Constructor
     void setCalificacion();
     void setObservacion();
-    int calcularCalificacionParcial();
+    float calcularCalificacionParcial();
     Criterio getCriterio();
+    string getObservacion();
 };
 
 #endif
