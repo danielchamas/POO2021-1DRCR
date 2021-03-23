@@ -18,7 +18,7 @@ BaseDatos::BaseDatos()
 
     this->listaPersonas.push_back(Persona("Esteban Quito", 1, "estebannq@gmail.com", tipo::interno));
     this->listaPersonas.push_back(Persona("Armando Casas Torres", 2, "armandocasas@gmail.com", tipo::externo));
-    this->listaPersonas.push_back(Persona("Héctor Tuga", 3, "hectrtug@outlook.com", tipo::interno));
+    this->listaPersonas.push_back(Persona("Hector Tuga", 3, "hectrtug@outlook.com", tipo::interno));
     this->listaPersonas.push_back(Persona("Elba Lazo Fuertes", 4, "elbalazito@yahoo.com", tipo::externo));
     this->listaPersonas.push_back(Persona("Susana Oria", 5, "oriasana@outlook.com", tipo::interno));
     this->listaPersonas.push_back(Persona("Alex Plosivo", 6, "alexploplo@yahoo.com", tipo::interno));
@@ -87,7 +87,6 @@ void BaseDatos::listarActasRechazadas()
 void BaseDatos::listarTrabajosJurado(Persona persona)
 {
     int numeroActas = 0, cont = 0;
-    cout << endl;
     cout << endl << "Actas que ha participado como jurado:" << endl << endl;
     for(list<Acta>::iterator it = listaActas.begin(); it != listaActas.end(); it++)
     {   // Verifica si el nombre de la persona esta de jurado en algun acta.
@@ -112,7 +111,7 @@ void BaseDatos::listarTrabajosProfesor(Persona persona)
     }
     for(list<Acta>::iterator it = listaActas.begin(); it != listaActas.end(); it++)
     {   // Verifica si el nombre del director está en algun acta.
-        if( (it->getDirector()).getNombre() == persona.getNombre())
+        if( (it->getDirector()).getNombre() == persona.getNombre() || (it->getCodirector()).getNombre() == persona.getNombre())
         {
             cout << ++cont << ") " << it->getNombreTrabajo() << endl;
             numeroActas++;
@@ -207,14 +206,20 @@ void BaseDatos::listarJuradosInternos()
 void BaseDatos::eliminarActas()
 {
     int acta;
-    cout << endl << "Digite el numero del acta a eliminar: " << endl;
+    cout << endl << "Digite el numero del acta a eliminar: ";
     cin >> acta;
     for(list<Acta>::iterator it = listaActas.begin(); it != listaActas.end(); it++)
     {
-        if(acta == it->getNumero()) // Verifica el numero del acta para poder eliminar
+        if(acta == it->getNumero() && it->getEstadoAct() == estadoActa::abierto) // Verifica el numero del acta para poder eliminar y el estado.
         {
             it->eliminarActa();
             listaActas.erase(it); //Elimina el objeto de la lista de actas
+            cout << "Acta eliminada con exito" << endl;
+            return;
+        }
+        else if(acta == it->getNumero() && it->getEstadoAct() == estadoActa::cerrado)
+        {
+            cout << "No se puede eliminar un acta cerrada." << endl;
             return;
         }
     }
@@ -224,8 +229,9 @@ void BaseDatos::eliminarActas()
 Persona BaseDatos::buscarPersonaRol(rol rol)
 { 
     long int id;  // Bandera para saber si la persona fue encontrada en la lista
-    cout << "Ingrese el ID: " << endl;
+    cout << "Ingrese el ID: ";
     cin >> id;
+    cout << endl;
     for (list<Persona>::iterator it = listaPersonas.begin(); it != listaPersonas.end(); it++)
     {
         if(it->getId() == id) // Verifica el Id en la lista de personas para ver si ya esta registrada.
@@ -354,7 +360,7 @@ void BaseDatos::crearPersona()
 Persona BaseDatos::validarPersona() 
 {
     long int id;
-    cout << "Ingresa el ID de la persona" << endl;
+    cout << "Ingresa el ID de la persona: ";
     cin >> id;
     for (list<Persona>::iterator it = listaPersonas.begin(); it != listaPersonas.end(); it++)
     {

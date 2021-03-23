@@ -216,6 +216,11 @@ Persona Acta::getDirector()
     return this->director;
 }
 
+Persona Acta::getCodirector()
+{
+    return this->codirector;
+}
+
 void Acta::calificarCriterios()
 {
 

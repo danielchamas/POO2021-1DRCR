@@ -68,12 +68,13 @@ public:
     void setJurado2(Persona);
     Persona getDirector();
     void setDirector(Persona);
+    Persona getCodirector();
+    void setCodirector(Persona);
     string getNombreTrabajo();
     estadoActa getEstadoAct();
     void eliminarActa();
     int getNumero();
     void setEstudiante(Persona);
-    void setCodirector(Persona);
     void borrarCondiciones();
     void generarArchivo();
 };

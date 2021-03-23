@@ -1,0 +1,81 @@
+			       Pontificia Universidad Javeriana Cali
+				    Facultad de Ingenieria
+				    Maestria en Ingenieria
+
+  ACTA: 1							       Fecha: Mon Mar 22 20:26:24 2021
+
+			   ACTA DE EVALUACIÓN DE TRABAJO DE GRADO
+
+  Trabajo de grado denominado: "Sistemas digitales para el desarrollo ecologico"
+
+  Autor:	      Esteban Quito	ID:1
+
+  Periodo:	      2021-2
+
+  Director:	      Hector Tuga
+
+  Co-Director:	      Susana Oria
+
+  Énfasis en:	      Sistemas de computacion
+
+  Modalidad:	      Aplicado
+
+  Jurado 1:	      Armando Casas Torres
+
+  Jurado 2:	      Elba Lazo Fuertes
+
+  En atención al desarrollo de este Trabajo de Grado y al documento y sustentación que presentó el(la) autor(a),
+  los Jurados damos las siguientes calificaciones parciales y observaciones (los criterios a evaluar y sus
+  ponderaciones se estipulan en el artículo 7.1 de las Directrices para Trabajo de Grado de Maestría):
+
+  1. Desarrollo y profundidad en el tratamiento del tema:
+
+	Calificación parcial: 5   								Ponderacion: 20
+	Observaciones: 5
+
+  2. Desafio academico y cientifico del tema:
+
+	Calificación parcial: 5   								Ponderacion: 15
+	Observaciones: Sobresaliente
+
+  3. Cumplimiento de los objetivos propuestos:
+
+	Calificación parcial: 5   								Ponderacion: 10
+	Observaciones: Excelente
+
+  4. Creatividad e innovacion de las soluciones y desarrollos propuestos:
+
+	Calificación parcial: 5   								Ponderacion: 10
+	Observaciones: Muy bien
+
+  5. Validez de los resultados y conclusiones:
+
+	Calificación parcial: 4.5   								Ponderacion: 20
+	Observaciones: Excelente
+
+  6. Manejo y procesamiento de la informacion y bibliografia:
+
+	Calificación parcial: 5   								Ponderacion: 10
+	Observaciones: Muy bien
+
+  7. Calidad y presentacion del documento escrito:
+
+	Calificación parcial: 5   								Ponderacion: 7.5
+	Observaciones: sobresaliente
+
+  8. Presentacion oral:
+
+	Calificación parcial: 5   								Ponderacion: 7.5
+	Observaciones: Muy bien
+
+  Como resultado de estas calificaciones parciales y sus ponderaciones, la calificación del Trabajo de
+  Grado es: 4.9
+
+  Observaciones adicionales: El trabajo estuvo muy bien organizado, excelente.
+
+  La calificación final queda sujeta a que se implementen las siguientes correcciones: 
+
+--------------------------------------------------------------------------------------------------------------------
+				    Firmado		   Firmado
+			    ________________________  ________________________
+				Firma del Jurado 1	Firma del Jurado 2
